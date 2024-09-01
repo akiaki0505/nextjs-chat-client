@@ -14,7 +14,7 @@ async function fetcher(key: string) {
 
 const testSelect = () => {
   
-  const {data, error, isLoading} = useSWR('http://localhost:3000/api/select', fetcher);
+  const {data, error, isLoading} = useSWR('http://localhost:3000/api/whereSelect', fetcher);
   console.log(data);
 
   if(error) return <div>Load is Failed</div>;

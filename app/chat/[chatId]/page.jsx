@@ -1,4 +1,5 @@
 "use client";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import useSWR from 'swr';
@@ -10,25 +11,39 @@ return fetch(key).then((res) => res.json());
 }
 
 export default function chat() {
+  const id = useParams();
 
   const [message, setMessage] = useState("");
+  const [room_id, setRoom_id] = useState(Number(id.chatId));
   const [list, setList] = useState([]);
   const [api, setApi] = useState([]);
 
   //const {data, error, isLoading} = useSWR('http://localhost:3000/api/whereSelect', fetcher);
   useEffect(() => {
-    const getTodos = async () => {
+    const getChat = async () => {
       const response = await fetch(
         'http://localhost:3000/api/whereSelect'
       );
       const data = await response.json();
       setApi(data);
     };
-    getTodos();
+    getChat();
   },[]);
 
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
+    const comment = String(message);
+    try {
+      await fetch("http://localhost:3000/api/create", {
+        method: 'post',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({comment, room_id}),
+      })
+    }catch(err){
+      console.log(err);
+    }
     //serverへの送信
     socket.emit("send_message", { message: message });
     setMessage("");
@@ -36,7 +51,6 @@ export default function chat() {
 
   //サーバーから受信
   socket.on("received_message", (data) => {
-    console.log(data);
     setList([...list, data]);
   });
 
@@ -48,6 +62,7 @@ export default function chat() {
         <div className="grid lg:grid-cols-1 border border-zinc-950 px-4 py-4 gap-4">
         {api ? api.map((value) => (
             <div key={value.id}>
+              {value.created_at}<br />
               {value.comment}
             </div>
           )): <div></div>}
@@ -61,10 +76,14 @@ export default function chat() {
         <div className="pt-5"></div>
 
         <textarea 
-          className="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           onChange={(e) => setMessage(e.target.value)}
           value={message} />
-          <br />
+        <br />
+        <input type="hidden" 
+          id="room_id"
+          onChange={(e) => setRoom_id(e.target.value)}
+          value={room_id} />
         <div className="pt-3"></div>
         <div>
           <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={(() => handleSendMessage())}>送信</button>

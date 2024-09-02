@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
+import style from "../styles/style.module.css";
 
 const socket = io("http://localhost:5000");
 
@@ -25,10 +26,12 @@ export default function chat() {
         `http://localhost:3000/api/whereSelect/${Number(id.chatId)}`
       );
       const data = await response.json();
+      console.log(data);
       setApi(data);
     };
     getChat();
-  },[list]);
+
+  }, [list]);
 
 
   const handleSendMessage = async () => {
@@ -62,8 +65,15 @@ export default function chat() {
         <div className="grid lg:grid-cols-1 border border-zinc-950 px-4 py-4 gap-4">
         {api ? api.map((value) => (
             <div key={value.id}>
-              {new Date(value.created_at).toLocaleString()}<br />
-              {value.comment}
+              <div className="flex justify-left pb-3">
+                <div className={style.circle}>アイコン</div>
+                <div>
+                  <span>ユーザー名</span><br />
+                  <span className="text-black/50 text-xs mt-0">{new Date(value.created_at).toLocaleString()}</span>
+                </div>
+              </div>
+              <div className={style.text}>{value.comment}</div>
+              <div className="border-b border-zinc-950 pt-3"></div>
             </div>
           )): <div></div>}
           {/*{list.map((chat) => (

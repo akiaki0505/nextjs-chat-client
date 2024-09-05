@@ -1,9 +1,11 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import style from "../styles/style.module.css";
+import icon from "@/public/icon.jpeg";
 
 const socket = io("http://localhost:5000");
 
@@ -26,7 +28,6 @@ export default function chat() {
         `http://localhost:3000/api/whereSelect/${Number(id.chatId)}`
       );
       const data = await response.json();
-      console.log(data);
       setApi(data);
     };
     getChat();
@@ -66,7 +67,12 @@ export default function chat() {
         {api ? api.map((value) => (
             <div key={value.id}>
               <div className="flex justify-left pb-3">
-                <div className={style.circle}>アイコン</div>
+                <div className={style.circle}>
+                  <Image 
+                    width={180}
+                    height={180} 
+                    src={icon} alt="icon" />
+                  </div>
                 <div>
                   <span>ユーザー名</span><br />
                   <span className="text-black/50 text-xs mt-0">{new Date(value.created_at).toLocaleString()}</span>

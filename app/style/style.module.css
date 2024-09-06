@@ -1,0 +1,22 @@
+.sub_h {
+    margin: 20px 0px 0px 0px;
+    position: relative;
+    padding: 0 65px;
+    text-align: center;
+}
+  
+.sub_h:before {
+    position: absolute;
+    top: calc(50% - 1px);
+    left: 10%;
+    width: 80%;
+    height: 2px;
+    content: '';
+    background: 1px #f1eeee;
+}
+  
+.sub_s {
+    position: relative;
+    padding: 0 1em;
+    background: #fff;
+}

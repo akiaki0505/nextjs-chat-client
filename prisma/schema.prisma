@@ -25,4 +25,5 @@ model Chat{
   created_at DateTime @default(now())
   room_id Int
   comment String
+  user_name String?
 }

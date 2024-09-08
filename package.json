@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "npx open-cli http://localhost:3000 && next dev",
+    "prisma": "prisma generate",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

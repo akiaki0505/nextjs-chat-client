@@ -32,6 +32,7 @@ export default function Chat(props) {
       const id = useParams();
       const [message, setMessage] = useState("");
       const [room_id, setRoom_id] = useState(Number(id.chatId));
+      const [user_name, setUser_name] = useState("");
       const [list, setList] = useState([]);
       const [api, setApi] = useState([]);
       const [room, setRoom] = useState([]);
@@ -124,7 +125,7 @@ export default function Chat(props) {
                                     />
                                 </div>
                                 <div>
-                                    <span>ユーザー名</span><br />
+                                    <span>{value.user_name?value.user_name:"NoName"}</span><br />
                                     <span className="text-black/50 text-xs mt-0">{new Date(value.created_at).toLocaleString()}</span>
                                 </div>
                             </div>
@@ -144,6 +145,10 @@ export default function Chat(props) {
                     id="room_id"
                     onChange={(e) => setRoom_id(e.target.value)}
                     value={room_id} />
+                <input type="hidden" 
+                    id="user_name"
+                    onChange={(e) => setRoom_id(e.target.value)}
+                    value={user_name} />
                 <div className="pt-3"></div>
                 <div>
                     <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={(() => handleSendMessage())}>送信</button>

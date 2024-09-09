@@ -13,8 +13,8 @@ export async function Header() {
   );
 
   return (
-    <header className="flex justify-between p-4 border-b items-center bg-white">
-        <h1 className="font-semibold text-xl leading-tight">Clone</h1>
+    <header className="flex justify-between p-4 sm:ml-64 border-b-2 border-slate-300/30 items-center bg-gradient-to-r bg-black/90 text-white">
+        <span className="font-semibold text-xl leading-tight">Room</span>
         <SignOut />
     </header>
   );

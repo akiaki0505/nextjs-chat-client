@@ -8,6 +8,7 @@ import style from "../styles/style.module.css";
 import icon from "@/public/icon.jpeg";
 import { RoomList } from "@/app/components/sidebar/roomList";
 import axios from "axios";
+import { Header } from "@/app/components/header";
 
 const socket = io("http://localhost:5000");
 
@@ -106,7 +107,8 @@ export default function Chat(props) {
     <>
     <RoomList allRoomData={room} />
     
-    <main className="flex min-h-screen flex-col">
+    <main className="flex min-h-screen flex-col bg-neutral-900">
+        <Header />
         <div className="p-4 sm:ml-64">
             <div className="p-4 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
                 <div className="grid grid-cols-1 gap-4 mb-4">
@@ -125,8 +127,8 @@ export default function Chat(props) {
                                     />
                                 </div>
                                 <div>
-                                    <span>{value.user_name?value.user_name:"NoName"}</span><br />
-                                    <span className="text-black/50 text-xs mt-0">{new Date(value.created_at).toLocaleString()}</span>
+                                    <span className="text-white">{value.user_name?value.user_name:"NoName"}</span><br />
+                                    <span className="text-white/50 text-xs mt-0">{new Date(value.created_at).toLocaleString()}</span>
                                 </div>
                             </div>
                             <div className={style.text}>{value.comment}</div>

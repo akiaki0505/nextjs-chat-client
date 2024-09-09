@@ -1,3 +1,4 @@
+"use server";
 import { SignOut } from '@/app/components/GitHubAuth/signOut-button';
 import { auth } from '@/auth';
 import Link from 'next/link';

@@ -108,13 +108,11 @@ export default function Chat(props) {
     <RoomList allRoomData={room} />
     
     <main className="flex min-h-screen flex-col bg-neutral-900">
-        <Header />
+        {/*<Header />*/}
         <div className="p-4 sm:ml-64">
-            <div className="p-4 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+            <div className="p-4 border-gray-200 border-dashed rounded-lg">
                 <div className="grid grid-cols-1 gap-4 mb-4">
-                    <h2 className="border-b border-zinc-950 pl-5">チャット</h2>
-                    <div className="pt-5"></div>
-                    <div className="grid lg:grid-cols-1 border border-zinc-950 px-4 py-4 gap-4">
+                  <div className="grid lg:grid-cols-1 px-4 py-4 gap-4">
                         
                     {api && api.map((value) => (
                         <div key={value.id}>
@@ -132,7 +130,7 @@ export default function Chat(props) {
                                 </div>
                             </div>
                             <div className={style.text}>{value.comment}</div>
-                            <div className="border-b border-zinc-950 pt-3"></div>
+                            <div className="border-b-2 border-slate-300/30 pt-3"></div>
                         </div>
                         ))}
 
@@ -142,22 +140,38 @@ export default function Chat(props) {
                 <textarea 
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     onChange={(e) => setMessage(e.target.value)}
-                    value={message} /><br />
+                    value={message} 
+                  /><br />
                 <input type="hidden" 
                     id="room_id"
                     onChange={(e) => setRoom_id(e.target.value)}
-                    value={room_id} />
+                    value={room_id} 
+                  />
                 <input type="hidden" 
                     id="user_name"
                     onChange={(e) => setRoom_id(e.target.value)}
-                    value={user_name} />
+                    value={user_name} 
+                  />
                 <div className="pt-3"></div>
                 <div>
-                    <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={(() => handleSendMessage())}>送信</button>
+                    <button className="text-xl w-3/5 bg-gradient-to-r from-emerald-500 to-emerald-300 text-white py-2 rounded" onClick={(() => handleSendMessage())}>Send</button>
                 </div>
             </div>
         </div>
     </main>
+    <div class="flex flex-row items-center h-16 rounded-xl bg-gray-700 sm:ml-64 px-4">
+    <input type="text" class="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10 bg-gray-600 text-gray-200"/>
+        <div class="ml-4">
+            <button class="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0">
+                <span>Send</span>
+                <span class="ml-2">
+                    <svg class="w-4 h-4 transform rotate-45 -mt-px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                    </svg>
+                </span>
+            </button>
+        </div>
+    </div>
     </>
     /*<main className="flex min-h-screen flex-col justify-between p-24">
       <div>

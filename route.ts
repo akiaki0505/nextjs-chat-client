@@ -2,7 +2,7 @@
  * 未認証でもアクセス可能なページパスの一覧
  * @type {string[]}
  */
-export const publicRoutes = ["/"];
+export const publicRoutes = ["/", "/userCreate"];
 
 /**
  * 認証系で利用するページパスの一覧

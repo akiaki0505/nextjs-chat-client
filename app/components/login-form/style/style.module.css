@@ -12,11 +12,11 @@
     width: 80%;
     height: 2px;
     content: '';
-    background: 1px #f1eeee;
+    background: 1px rgb(52 211 153);
 }
   
 .sub_s {
     position: relative;
     padding: 0 1em;
-    background: #fff;
+    background: rgb(52 211 153);
 }

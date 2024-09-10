@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
 import style from "../styles/style.module.css";
 import icon from "@/public/icon.jpeg";
@@ -17,6 +17,25 @@ async function fetcher(key) {
 }
 
 export default function Chat(props) {
+    const [ value, setValue ] = useState('');
+    const [ height, setHeight ] = useState(0);
+    const textAreaRef = useRef(null);
+    useEffect(() => {
+        if (textAreaRef.current) {
+            setHeight(0); // テキストエリアの高さを初期値に戻す
+        }
+    }, [value]);
+    useEffect(() => {
+        // 高さが初期値の場合にscrollHeightを高さに設定する
+        if (!height && textAreaRef.current) {
+            setHeight(textAreaRef.current.scrollHeight);
+        }
+    }, [height]);
+    
+    function handleChangeValue(value) {
+        setValue(value);
+    }
+
     //サーバーサイドコンポーネント
     /*const {params, searchParams } = props;
     const roomRes = await fetch("http://localhost:3000/api/select", {
@@ -33,7 +52,7 @@ export default function Chat(props) {
       const id = useParams();
       const [message, setMessage] = useState("");
       const [room_id, setRoom_id] = useState(Number(id.chatId));
-      const [user_name, setUser_name] = useState("");
+      const [user_name, setUser_name] = useState("テストユーザー");
       const [list, setList] = useState([]);
       const [api, setApi] = useState([]);
       const [room, setRoom] = useState([]);
@@ -89,7 +108,7 @@ export default function Chat(props) {
 
 
   //const {data, error, isLoading} = useSWR('http://localhost:3000/api/whereSelect', fetcher);
-  /*useEffect(() => {
+  useEffect(() => {
     const getChat = async () => {
       const response = await fetch(
         `http://localhost:3000/api/whereSelect/${Number(id.chatId)}`
@@ -100,7 +119,13 @@ export default function Chat(props) {
     };
     getChat();
 
-  }, [list]);*/
+  }, [list]);
+
+  useEffect(() => {
+    var innerHeight = document.body.clientHeight + 50;
+    let element = document.querySelector('#wrapper');
+    element.style['min-height'] = innerHeight+'px';
+  }, [list]);
 
 
   return (
@@ -108,121 +133,75 @@ export default function Chat(props) {
     <RoomList allRoomData={room} />
     
     <main className="flex min-h-screen flex-col bg-neutral-900">
-        {/*<Header />*/}
-        <div className="p-4 sm:ml-64">
-            <div className="p-4 border-gray-200 border-dashed rounded-lg">
-                <div className="grid grid-cols-1 gap-4 mb-4">
-                  <div className="grid lg:grid-cols-1 px-4 py-4 gap-4">
-                        
-                    {api && api.map((value) => (
-                        <div key={value.id}>
-                            <div className="flex justify-left pb-3">
-                                <div className={style.circle}>
-                                    <Image 
-                                        width={180}
-                                        height={180} 
-                                        src={icon} alt="icon" 
-                                    />
-                                </div>
-                                <div>
-                                    <span className="text-white">{value.user_name?value.user_name:"NoName"}</span><br />
-                                    <span className="text-white/50 text-xs mt-0">{new Date(value.created_at).toLocaleString()}</span>
-                                </div>
-                            </div>
-                            <div className={style.text}>{value.comment}</div>
-                            <div className="border-b-2 border-slate-300/30 pt-3"></div>
-                        </div>
-                        ))}
+        <div className={style.wrapper} id="wrapper">
+            {/*<Header />*/}
+            <div className="p-4 sm:ml-64">
+                <div className="p-4 border-gray-200 border-dashed rounded-lg">
+                    <div className="grid grid-cols-1 gap-4 mb-4">
+                    <div className="grid lg:grid-cols-1 px-4 py-4 gap-4">
 
+                        {api && api.map((value) => (
+                            <div key={value.id}>
+                                <div className="flex justify-left pb-3">
+                                    <div className={style.circle}>
+                                        <Image 
+                                            width={180}
+                                            height={180} 
+                                            src={icon} alt="icon" 
+                                        />
+                                    </div>
+                                    <div>
+                                        <span className="text-white">{value.user_name?value.user_name:"NoName"}</span><br />
+                                        <span className="text-white/50 text-xs mt-0">{new Date(value.created_at).toLocaleString()}</span>
+                                    </div>
+                                </div>
+                                <div className={style.text}>{value.comment}</div>
+                                <div className="border-b-2 border-slate-300/30 pt-3"></div>
+                            </div>
+                            ))}
+
+                        </div>
                     </div>
-                </div>
-                <div className="pt-5"></div>
-                <textarea 
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    onChange={(e) => setMessage(e.target.value)}
-                    value={message} 
-                  /><br />
-                <input type="hidden" 
-                    id="room_id"
-                    onChange={(e) => setRoom_id(e.target.value)}
-                    value={room_id} 
-                  />
-                <input type="hidden" 
-                    id="user_name"
-                    onChange={(e) => setRoom_id(e.target.value)}
-                    value={user_name} 
-                  />
-                <div className="pt-3"></div>
-                <div>
-                    <button className="text-xl w-3/5 bg-gradient-to-r from-emerald-500 to-emerald-300 text-white py-2 rounded" onClick={(() => handleSendMessage())}>Send</button>
+                    <div className="pt-5"></div>
+                    <input type="hidden" 
+                        id="room_id"
+                        onChange={(e) => setRoom_id(e.target.value)}
+                        value={room_id} 
+                    />
+                    <input type="hidden" 
+                        id="user_name"
+                        onChange={(e) => setUser_name()}
+                        value={user_name} 
+                    />
                 </div>
             </div>
         </div>
     </main>
-    <div class="flex flex-row items-center h-16 rounded-xl bg-gray-700 sm:ml-64 px-4">
-    <input type="text" class="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10 bg-gray-600 text-gray-200"/>
-        <div class="ml-4">
-            <button class="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0">
-                <span>Send</span>
-                <span class="ml-2">
-                    <svg class="w-4 h-4 transform rotate-45 -mt-px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-                    </svg>
-                </span>
-            </button>
+    <div className={style['sp-fixed']}>
+        <div class="bg-gray-700 sm:ml-64 px-4 pt-5 pb-5">
+            <textarea 
+                type="text" class="flex w-full border-2 border-slate-300/30 rounded-xl focus:outline-none focus:border-indigo-300 pl-4 bg-gray-600 text-gray-200 resize-none"
+                onChange={(e) => setMessage(e.target.value)}
+                value={message} 
+                onInput={ (evt) => handleChangeValue(evt.target.value) }
+                style={{ height: height ? `${ height }px` : 'auto' }}
+                ref={ textAreaRef }
+            />
+            <div className={style.right}>
+                <button 
+                    className="flex items-center justify-center bg-gradient-to-r from-emerald-500 to-emerald-300 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 mt-5 flex-shrink-0 " 
+                    onClick={(() => handleSendMessage())}
+                >
+                    <span>Send</span>
+                    <span className="ml-2">
+                        <svg className="w-4 h-4 transform rotate-45 -mt-px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                        </svg>
+                    </span>
+                </button>
+            </div>
         </div>
     </div>
     </>
-    /*<main className="flex min-h-screen flex-col justify-between p-24">
-      <div>
-        <h2 className="border-b border-zinc-950 pl-5">チャット</h2>
-        <div className="pt-5"></div>
-        <div className="grid lg:grid-cols-1 border border-zinc-950 px-4 py-4 gap-4">
-        {api ? api.map((value) => (
-            <div key={value.id}>
-              <div className="flex justify-left pb-3">
-                <div className={style.circle}>
-                  <Image 
-                    width={180}
-                    height={180} 
-                    src={icon} alt="icon" />
-                  </div>
-                <div>
-                  <span>ユーザー名</span><br />
-                  <span className="text-black/50 text-xs mt-0">{new Date(value.created_at).toLocaleString()}</span>
-                </div>
-              </div>
-              <div className={style.text}>{value.comment}</div>
-              <div className="border-b border-zinc-950 pt-3"></div>
-            </div>
-          )): <div></div>}
-          {list.map((chat) => (
-            <div key={chat.message}>
-              {chat.message}
-            </div>
-          ))}
-        </div>
-
-        <div className="pt-5"></div>
-
-        <textarea 
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          onChange={(e) => setMessage(e.target.value)}
-          value={message} />
-        <br />
-        <input type="hidden" 
-          id="room_id"
-          onChange={(e) => setRoom_id(e.target.value)}
-          value={room_id} />
-        <div className="pt-3"></div>
-        <div>
-          <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={(() => handleSendMessage())}>送信</button>
-        </div>
-        <br />
-        <div>
-        <Link href={"/room"} className="bg-blue-500 text-white font-bold py-2 px-4 rounded-md">戻る</Link>
-        </div>
-      </div>
-    </main>*/
   );
 }

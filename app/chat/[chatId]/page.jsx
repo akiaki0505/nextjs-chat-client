@@ -108,7 +108,7 @@ export default function Chat(props) {
 
 
   //const {data, error, isLoading} = useSWR('http://localhost:3000/api/whereSelect', fetcher);
-  useEffect(() => {
+  /*useEffect(() => {
     const getChat = async () => {
       const response = await fetch(
         `http://localhost:3000/api/whereSelect/${Number(id.chatId)}`
@@ -119,7 +119,7 @@ export default function Chat(props) {
     };
     getChat();
 
-  }, [list]);
+  }, [list]);*/
 
   useEffect(() => {
     var innerHeight = document.body.clientHeight + 50;

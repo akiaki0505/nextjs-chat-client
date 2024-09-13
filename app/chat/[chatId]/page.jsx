@@ -5,8 +5,7 @@ import { ChatList } from "@/app/components/chat/chatList";
 import { SessionProvider } from "next-auth/react";
 
 
-export default async function Chat(props) {
-    const {params, searchParams } = props;
+export default async function Chat() {
     const roomRes = await fetch("http://localhost:3000/api/select");
     const allRoomData = await roomRes.json();
     
@@ -17,7 +16,7 @@ export default async function Chat(props) {
         <main className="flex min-h-screen flex-col bg-neutral-900">
             <Header />
             <SessionProvider>
-                <ChatList props={params.chatId}/>
+                <ChatList />
             </SessionProvider>
         </main>
         </>

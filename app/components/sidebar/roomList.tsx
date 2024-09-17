@@ -61,7 +61,7 @@ export function RoomList(allRoomData: { rooms: Room[] }) {
                     <div className="relative w-full">
                         <input 
                             type="text" 
-                            className="block p-2.5 w-full z-20 bg-black/20 text-sm text-white rounded rounded-s-gray-100 border-2 border-slate-300/30 hover:bg-gray-700/90" 
+                            className="block p-2.5 w-full z-20 bg-black/20 text-sm text-gray-300 rounded rounded-s-gray-100 border-2 border-slate-300/30 hover:bg-gray-700/90" 
                             name="room_name"
                             onChange={handleRoomInputChange}
                             value={roomInput}

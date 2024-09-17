@@ -26,7 +26,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         <div className={style['sp-fixed']}>
             <div className="bg-gray-700 sm:ml-64 px-4 pt-5 pb-5">
                 <textarea
-                    className="flex w-full border-2 border-slate-300/30 rounded-xl focus:outline-none focus:border-indigo-300 pl-4 bg-gray-600 text-gray-200 resize-none"
+                    className="flex w-full border-2 border-slate-300/30 rounded-xl focus:outline-none focus:border-indigo-300 pl-4 bg-gray-600 text-gray-300 resize-none"
                     name="message"
                     onChange={handleInputChange}
                     value={message}

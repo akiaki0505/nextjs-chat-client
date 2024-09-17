@@ -3,6 +3,7 @@ import style from "@/app/components/login-form/style/style.module.css";
 import { SignIn } from '@/app/components/GitHubAuth/signIn-button';
 import { Input } from '@/app/components/login-form/elements/input';
 import { Button } from '@/app/components/login-form/elements/button';
+import Link from 'next/link';
 
 export function LoignForm() {
   return (
@@ -21,7 +22,7 @@ export function LoignForm() {
                         <Input 
                             type="email" 
                             placeholder="MailAddress"
-                            className="w-4 h-4 text-emerald-400 dark:text-white"
+                            className="w-4 h-4 text-emerald-400"
                             width=""
                             height=""
                             viewBox="0 0 20 18"
@@ -31,7 +32,7 @@ export function LoignForm() {
                         <Input 
                             type="password" 
                             placeholder="Password"
-                            className="w-5 h-5 text-emerald-400 dark:text-white"
+                            className="w-5 h-5 text-emerald-400"
                             width="24" 
                             height="24" 
                             viewBox="0 0 24 20"
@@ -45,6 +46,11 @@ export function LoignForm() {
                         <span className={style.sub_s}>OR CONTINUE WITH</span>
                     </div>
                     <SignIn/>
+                </div>
+                <div className="text-center p-5 bg-black/40">
+                    <div className="text-gray-300">Don't have an account? 
+                        <Link href="/userCreate" className="font-semibold text-emerald-400 pl-3" >Sign up</Link> 
+                    </div>
                 </div>
             </div>
         </div>

@@ -8,7 +8,7 @@ export async function Header() {
   if(!session?.user) return (
     <header className="flex justify-between p-4 items-center text-white">
         <Link href="/" className="font-semibold text-xl leading-tight">Clone</Link>
-        <Link href="/userCreate" className="py-1 px-4 border-2 border-white-100 rounded">Sign Up</Link>
+        <Link href="/userCreate" className="py-1 px-4 border-2 border-white-100 rounded">Sign up</Link>
     </header>
   );
 

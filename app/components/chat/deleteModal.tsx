@@ -17,7 +17,7 @@ export default function DeleteModal(props: ModalProps) {
         const data = Object.fromEntries(formData);
 
         try {
-            await fetch("http://localhost:3000/api/delete", {
+            await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/chat/delete", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"

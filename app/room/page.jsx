@@ -2,7 +2,7 @@ import { Header } from "@/app/components/header";
 import { RoomList } from "@/app/components/sidebar/roomList";
 
 export default async function Room() {
-  const response = await fetch("http://localhost:3000/api/room/select",{
+  const response = await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/room/select",{
     cache: "no-store",
   });
   const allRoomData = await response.json();

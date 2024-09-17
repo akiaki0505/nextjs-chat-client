@@ -25,7 +25,7 @@ export const useChatData = () => {
 
     useEffect(() => {
         const getChat = async () => {
-            const response = await fetch(`http://localhost:3000/api/whereSelect/${room_id}`, {
+            const response = await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + `/chat/whereSelect/${room_id}`, {
                 cache: "no-store",
             });
             const data = await response.json();
@@ -38,7 +38,7 @@ export const useChatData = () => {
         if (!message.trim()) return; // メッセージが空なら送信しない
 
         try {
-            await fetch("http://localhost:3000/api/create", {
+            await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/chat/create", {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ comment: message, room_id, user_name }),

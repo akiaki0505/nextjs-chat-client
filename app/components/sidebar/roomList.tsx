@@ -16,7 +16,7 @@ export function RoomList(allRoomData: { rooms: Room[] }) {
 
     
     const getRoom = async () => {
-        const response = await fetch("http://localhost:3000/api/room/select", {
+        const response = await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/room/select", {
             cache: "no-store",
         });
         const data = await response.json();
@@ -34,7 +34,7 @@ export function RoomList(allRoomData: { rooms: Room[] }) {
         const formData = new FormData(event.currentTarget);
         const data = Object.fromEntries(formData);
         try{
-            await fetch("http://localhost:3000/api/room/create", {
+            await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/room/create", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"

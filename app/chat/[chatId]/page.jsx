@@ -5,7 +5,7 @@ import { SessionProvider } from "next-auth/react";
 
 
 export default async function Chat() {
-    const roomRes = await fetch("http://localhost:3000/api/room/select",{
+    const roomRes = await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/room/select",{
         cache: "no-store",
     });
     const allRoomData = await roomRes.json();

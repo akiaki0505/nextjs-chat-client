@@ -8,13 +8,13 @@ export async function Header() {
   if(!session?.user) return (
     <header className="flex justify-between p-4 items-center text-white">
         <Link href="/" className="font-semibold text-xl leading-tight">Clone</Link>
-        <Link href="/userCreate" className="py-1 px-4 border-2 border-white-100 rounded">Sign Up</Link>
+        <Link href="/userCreate" className="py-1 px-4 border-2 border-white-100 rounded">Sign up</Link>
     </header>
   );
 
   return (
-    <header className="flex justify-between p-4 border-b items-center bg-white">
-        <h1 className="font-semibold text-xl leading-tight">Clone</h1>
+    <header className="flex justify-between p-4 sm:ml-64 border-b-2 border-slate-300/30 items-center bg-gradient-to-r bg-black/90 text-white">
+        <span className="font-semibold text-xl leading-tight">Room</span>
         <SignOut />
     </header>
   );

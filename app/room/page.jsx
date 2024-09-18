@@ -2,7 +2,9 @@ import { Header } from "@/app/components/header";
 import { RoomList } from "@/app/components/sidebar/roomList";
 
 export default async function Room() {
-  const response = await fetch("http://localhost:3000/api/select");
+  const response = await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/room/select",{
+    cache: "no-store",
+  });
   const allRoomData = await response.json();
 
   return (
@@ -20,8 +22,13 @@ export default async function Room() {
         <Header />
         <div className="p-4 sm:ml-64">
             <div className="p-4 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-                <div className="grid grid-cols-3 gap-4 mb-4 text-white">
-                    <span>sss</span>
+                <div className="grid grid-cols-1 gap-4 mb-4 text-white">
+                    <div>
+                        <span>
+                            Welcome to Clone.<br />
+                            Your complete platform for the communication.
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>

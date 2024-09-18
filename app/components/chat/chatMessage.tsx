@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Image from "next/image";
 import style from "@/app/chat/styles/style.module.css";
-import icon from "@/public/icon.jpeg";
+import icon from "@/public/favicon.ico";
 import DeleteModal from "@/app/components/chat/deleteModal";
 
 // メッセージの型定義

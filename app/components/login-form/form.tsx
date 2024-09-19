@@ -48,7 +48,7 @@ export function LoignForm() {
                     <SignIn/>
                 </div>
                 <div className="text-center p-5 bg-black/40">
-                    <div className="text-gray-300">Don't have an account? 
+                    <div className="text-gray-300">Don&rsquo;t have an account? 
                         <Link href="/userCreate" className="font-semibold text-emerald-400 pl-3" >Sign up</Link> 
                     </div>
                 </div>

@@ -3,7 +3,7 @@ import { useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import io from "socket.io-client";
 
-const socket = io(process.env.NEXT_PUBLIC_SOCKET_REQUEST || "http://localhost:5000");
+const socket = io(process.env.NEXT_PUBLIC_SOCKET_REQUEST || "http://43.207.203.106");
 
 // チャットメッセージの型定義
 interface ChatMessage {

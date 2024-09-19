@@ -12,6 +12,7 @@ export const config: NextAuthConfig = {
             clientSecret: process.env.AUTH_GITHUB_SECRET,
         }),
     ],
+    trustHost: true,
     //basePath: "/api/auth",
     callbacks: {
         authorized({ request, auth }){

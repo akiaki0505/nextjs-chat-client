@@ -1,11 +1,36 @@
-import React from 'react'
+"use client";
+import React, { useState } from 'react'
 import style from "@/app/components/login-form/style/style.module.css";
 import { SignIn } from '@/app/components/GitHubAuth/signIn-button';
+import { signIn } from 'next-auth/react';
 import { Input } from '@/app/components/login-form/elements/input';
 import { Button } from '@/app/components/login-form/elements/button';
+import { useRouter } from "next/navigation";
 import Link from 'next/link';
 
 export function LoignForm() {
+    const router = useRouter();
+    const [error, setError] = useState(''); 
+    const handleSubmit = async (value: any) => {
+        value.preventDefault();
+        setError(''); 
+        const formData = new FormData(value.currentTarget);
+        const formDataJson = Object.fromEntries(formData);
+    
+        const result = await signIn('credentials', {
+          redirect: false,
+          mailaddress: formDataJson.mailaddress,
+          password: formDataJson.password,
+        });
+    
+
+        if (result && result.error) {
+            setError('Invalid email or password');
+            console.error(result.error);
+          } else {
+            router.push("/room");
+          }
+      };
   return (
     <div className="flex-auto">
         <div className="flex justify-center mt-16">
@@ -18,9 +43,11 @@ export function LoignForm() {
                             Sign in to your account
                         </span>
                     </p>
-                    <form>
+                    <form onSubmit={handleSubmit}>
+                        {error && <span style={{ color: 'red' }}>{error}</span>}
                         <Input 
                             type="email" 
+                            name="mailaddress" 
                             placeholder="MailAddress"
                             className="w-4 h-4 text-emerald-400"
                             width=""
@@ -31,6 +58,7 @@ export function LoignForm() {
                             />
                         <Input 
                             type="password" 
+                            name="password" 
                             placeholder="Password"
                             className="w-5 h-5 text-emerald-400"
                             width="24" 

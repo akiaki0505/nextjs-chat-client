@@ -32,6 +32,6 @@ model User{
   id Int @id @default(autoincrement())
   created_at DateTime @default(now())
   name String?
-  mailaddress String
+  mailaddress String @unique
   password String
 }

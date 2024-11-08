@@ -1,6 +1,11 @@
 import { apiAuthPrefix, authRoutes, DEFAULT_LOGIN_REDIRECT, publicRoutes } from "@/route";
 import NextAuth, { NextAuthConfig } from "next-auth";
+import CredentialsProvider from 'next-auth/providers/credentials';
 import GitHub from "next-auth/providers/github";
+import { PrismaClient } from "@prisma/client";
+import bcrypt from 'bcryptjs';
+
+const prisma = new PrismaClient();
 
 export const config: NextAuthConfig = {
     theme: {
@@ -10,6 +15,26 @@ export const config: NextAuthConfig = {
         GitHub({
             clientId: process.env.AUTH_GITHUB_ID, 
             clientSecret: process.env.AUTH_GITHUB_SECRET,
+        }),
+        CredentialsProvider({
+            name: 'Credentials',
+            credentials: {
+                mailaddress: { label: "Email", type: "text" },
+                password: { label: "Password", type: "password" },
+            },
+            async authorize(credentials) {
+                const user = await prisma.user.findUnique({
+                    where: { mailaddress: credentials.mailaddress as string },
+                });
+                
+                if (user) {
+                    const isValidPassword = bcrypt.compareSync(credentials.password as string, user.password);
+                if (isValidPassword) {
+                    return { id: user.id, mailaddress: user.mailaddress, name: user.name };
+                }
+            }
+            return null;
+            }
         }),
     ],
     trustHost: true,
